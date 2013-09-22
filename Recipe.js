@@ -40,7 +40,7 @@ Recipe.prototype.createChildWith = function(mate) {
     while (Math.random() < this.soylent.mutationProbability){
         var ingredientToMutate = Math.floor(Math.random() * this.soylent.ingredients.length);
         var mutationMultiplier = Math.random() > 0.5 ? (1 - this.soylent.mutationMultiplier) : (1 + this.soylent.mutationMultiplier);
-        childIngredientAmounts[ingredientToMutate] = childIngredientAmounts[ingredientToMutate] * mutationMultiplier;
+        childIngredientAmounts[ingredientToMutate] = Math.min(childIngredientAmounts[ingredientToMutate] * mutationMultiplier, this.soylent.ingredients[ingredientToMutate].maxAmount);
     }
 
     return new Recipe(this.soylent, childIngredientAmounts);
