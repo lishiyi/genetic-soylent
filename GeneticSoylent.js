@@ -95,7 +95,7 @@ GeneticSoylent.prototype.render = function() {
           '<td style="border-top: 1px solid #888">Total</td>',
           '<td style="border-top: 1px solid #888" class="text-center"></td>',
           '<% _.each(nutrientKeys, function(nutrient, index) { %>',
-            '<td style="border-top: 1px solid #888" class="text-center"><%= Math.round(total[nutrient]) %></td>',
+            '<td style="border-top: 1px solid #888" class="text-center"><%= total[nutrient].toFixed(2) %></td>',
           '<% }); %>',
         '</tr>',
         '<tr>',
@@ -109,7 +109,7 @@ GeneticSoylent.prototype.render = function() {
           '<td>% Deviation</td>',
           '<td class="text-center"></td>',
           '<% _.each(nutrientKeys, function(nutrient, index) { %>',
-            '<td class="text-center"><%= Math.round(nutrientCompleteness[nutrient]) %>%</td>',
+            '<td class="text-center"><%= nutrientCompleteness[nutrient].toFixed(1) %>%</td>',
           '<% }); %>',
         '</tr>',
       '</table>'
