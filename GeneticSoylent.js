@@ -104,18 +104,18 @@ GeneticSoylent.prototype.render = function() {
         '<tr>',
           '<td>Target</td>',
           '<td class="text-center"></td>',
-          '<td class="text-center"><%= targetProfile.calories %></td>',
-          '<td class="text-center"><%= targetProfile.carbs %></td>',
-          '<td class="text-center"><%= targetProfile.protein %></td>',
-          '<td class="text-center"><%= targetProfile.fat %></td>',
+          '<td class="text-center"><%= targetProfile.calories.min %> - <%= targetProfile.calories.max %></td>',
+          '<td class="text-center"><%= targetProfile.carbs.min %> - <%= targetProfile.carbs.max %></td>',
+          '<td class="text-center"><%= targetProfile.protein.min %> - <%= targetProfile.protein.max %></td>',
+          '<td class="text-center"><%= targetProfile.fat.min %> - <%= targetProfile.fat.max %></td>',
         '</tr>',
         '<tr class="active">',
-          '<td>% Complete</td>',
+          '<td>% Deviation</td>',
           '<td class="text-center"></td>',
-          '<td class="text-center"><%= Math.round(total.calories / targetProfile.calories * 100) %>%</td>',
-          '<td class="text-center"><%= Math.round(total.carbs / targetProfile.carbs * 100) %>%</td>',
-          '<td class="text-center"><%= Math.round(total.protein / targetProfile.protein * 100) %>%</td>',
-          '<td class="text-center"><%= Math.round(total.fat / targetProfile.fat * 100) %>%</td>',
+          '<td class="text-center"><%= Math.round(nutrientCompleteness["calories"]) %>%</td>',
+          '<td class="text-center"><%= Math.round(nutrientCompleteness["carbs"]) %>%</td>',
+          '<td class="text-center"><%= Math.round(nutrientCompleteness["protein"]) %>%</td>',
+          '<td class="text-center"><%= Math.round(nutrientCompleteness["fat"]) %>%</td>',
         '</tr>',
       '</table>'
     ].join(''));
@@ -124,7 +124,8 @@ GeneticSoylent.prototype.render = function() {
         total: this.recipes[0].nutrientTotals,
         amounts: this.recipes[0].ingredientAmounts,
         ingredients: this.ingredients,
-        targetProfile: this.targetNutrients
+        targetProfile: this.targetNutrients,
+        nutrientCompleteness: this.recipes[0].nutrientCompleteness
     }));
 
     $('.generation').val(this.currentGeneration);

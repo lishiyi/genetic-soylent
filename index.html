@@ -73,10 +73,10 @@
         var testGeneticSoylent = new GeneticSoylent({
             ingredients: ingredients,
             targetNutrients: {
-                calories: 2000,
-                carbs:    250,
-                protein:  85,
-                fat:      65
+                calories: {min: 1500, max: 2000},
+                carbs:    {min:  250, max:  500},
+                protein:  {min:   85, max:  150},
+                fat:      {min:   65, max:  100}
             }
         });
 
