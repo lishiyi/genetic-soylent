@@ -110,12 +110,12 @@ GeneticSoylent.prototype.render = function() {
           '<td class="text-center"><%= targetProfile.fat.min %> - <%= targetProfile.fat.max %></td>',
         '</tr>',
         '<tr class="active">',
-          '<td>% Complete</td>',
+          '<td>% Deviation</td>',
           '<td class="text-center"></td>',
-          '<td class="text-center"><%= Math.round(total.calories / targetProfile.calories.min * 100) %>%</td>',
-          '<td class="text-center"><%= Math.round(total.carbs / targetProfile.carbs.min * 100) %>%</td>',
-          '<td class="text-center"><%= Math.round(total.protein / targetProfile.protein.min * 100) %>%</td>',
-          '<td class="text-center"><%= Math.round(total.fat / targetProfile.fat.min * 100) %>%</td>',
+          '<td class="text-center"><%= Math.round(nutrientCompleteness["calories"]) %>%</td>',
+          '<td class="text-center"><%= Math.round(nutrientCompleteness["carbs"]) %>%</td>',
+          '<td class="text-center"><%= Math.round(nutrientCompleteness["protein"]) %>%</td>',
+          '<td class="text-center"><%= Math.round(nutrientCompleteness["fat"]) %>%</td>',
         '</tr>',
       '</table>'
     ].join(''));
@@ -124,7 +124,8 @@ GeneticSoylent.prototype.render = function() {
         total: this.recipes[0].nutrientTotals,
         amounts: this.recipes[0].ingredientAmounts,
         ingredients: this.ingredients,
-        targetProfile: this.targetNutrients
+        targetProfile: this.targetNutrients,
+        nutrientCompleteness: this.recipes[0].nutrientCompleteness
     }));
 
     $('.generation').val(this.currentGeneration);

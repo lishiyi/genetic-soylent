@@ -74,6 +74,7 @@ Recipe.prototype.calculateCompleteness = function() {
 
     var nutrients = _.keys(this.soylent.targetNutrients);
     this.calculateTotalNutrients();
+    this.nutrientCompleteness = {};
 
     var nutrientCompleteness = 0;
     _.each(nutrients, function(nutrient) {
@@ -87,8 +88,9 @@ Recipe.prototype.calculateCompleteness = function() {
         else {
             completeness = 0;
         }
-        console.log(nutrient + ": " + completeness);
+        //console.log(nutrient + ": " + completeness);
         nutrientCompleteness += completeness;
+        this.nutrientCompleteness[nutrient] = completeness;
     }, this);
 
     this.completenessScore = -nutrientCompleteness;
