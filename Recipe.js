@@ -14,7 +14,7 @@ var Recipe = function(soylent, ingredientAmounts) {
 
         // Initialize the recipe with random amounts of each ingredient.
         for (var i = 0; i < this.soylent.ingredients.length; i++){
-            this.ingredientAmounts.push(Math.round(Math.random() * this.soylent.ingredients[i].maxAmount));
+            this.ingredientAmounts.push(Math.random() * this.soylent.ingredients[i].maxAmount);
         }
     }
 
@@ -40,7 +40,7 @@ Recipe.prototype.createChildWith = function(mate) {
     while (Math.random() < this.soylent.mutationProbability){
         var ingredientToMutate = Math.floor(Math.random() * this.soylent.ingredients.length);
         var mutationMultiplier = Math.random() > 0.5 ? (1 - this.soylent.mutationMultiplier) : (1 + this.soylent.mutationMultiplier);
-        childIngredientAmounts[ingredientToMutate] = Math.round(childIngredientAmounts[ingredientToMutate] * mutationMultiplier);
+        childIngredientAmounts[ingredientToMutate] = childIngredientAmounts[ingredientToMutate] * mutationMultiplier;
     }
 
     return new Recipe(this.soylent, childIngredientAmounts);
