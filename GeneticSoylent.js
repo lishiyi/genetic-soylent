@@ -87,7 +87,7 @@ GeneticSoylent.prototype.render = function() {
             '<td><%= ingredient.name %></td>',
             '<td class="text-center"><%= amounts[idx].toFixed(3) %></td>',
             '<% _.each(nutrientKeys, function(nutrient, index) { %>',
-              '<td class="text-center"><%= Math.round(ingredient[nutrient] * amounts[idx]) %></td>',
+              '<td class="text-center"><%= (ingredient[nutrient] * amounts[idx]).toFixed(2) %></td>',
             '<% }); %>',
           '</tr>',
         '<% }); %>',
