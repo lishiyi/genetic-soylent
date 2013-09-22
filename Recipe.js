@@ -56,7 +56,7 @@ Recipe.prototype.calculateTotalNutrients = function() {
 
     _.each(this.soylent.ingredients, function(ingredient, idx) {
         _.each(nutrients, function(nutrient) {
-            var ingredientNutrient = ingredient[nutrient] * this.ingredientAmounts[idx];
+            var ingredientNutrient = ingredient[nutrient] * Math.round(this.ingredientAmounts[idx]);
             this.nutrientTotals[nutrient] = this.nutrientTotals[nutrient] || 0;
             this.nutrientTotals[nutrient] += ingredientNutrient;
         }, this);
