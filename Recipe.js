@@ -56,6 +56,8 @@ Recipe.prototype.calculateTotalNutrients = function() {
 
     _.each(this.soylent.ingredients, function(ingredient, idx) {
         _.each(nutrients, function(nutrient) {
+            // this.ingredientAmounts[idx] is rounded to the nearest whole since we assume input
+            // is in the form of the smallest measurable unit.
             var ingredientNutrient = ingredient[nutrient] * Math.round(this.ingredientAmounts[idx]);
             this.nutrientTotals[nutrient] = this.nutrientTotals[nutrient] || 0;
             this.nutrientTotals[nutrient] += ingredientNutrient;

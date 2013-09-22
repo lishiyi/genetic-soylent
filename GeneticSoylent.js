@@ -85,6 +85,8 @@ GeneticSoylent.prototype.render = function() {
         '<% _.each(ingredients, function(ingredient, idx) { %>',
           '<tr>',
             '<td><%= ingredient.name %></td>',
+            // amounts[idx] is rounded to the nearest whole since we assume that inputs are
+            // given in the smallest measurable units
             '<td class="text-center"><%= Math.round(amounts[idx]) %></td>',
             '<% _.each(nutrientKeys, function(nutrient, index) { %>',
               '<td class="text-center"><%= (ingredient[nutrient] * Math.round(amounts[idx])).toFixed(2) %></td>',
