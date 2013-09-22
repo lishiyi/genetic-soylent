@@ -40,7 +40,7 @@ Recipe.prototype.createChildWith = function(mate) {
     while (Math.random() < this.soylent.mutationProbability){
         var ingredientToMutate = Math.floor(Math.random() * this.soylent.ingredients.length);
         var mutationMultiplier = Math.random() > 0.5 ? (1 - this.soylent.mutationMultiplier) : (1 + this.soylent.mutationMultiplier);
-        childIngredientAmounts[ingredientToMutate] = childIngredientAmounts[ingredientToMutate] * mutationMultiplier;
+        childIngredientAmounts[ingredientToMutate] = Math.min(childIngredientAmounts[ingredientToMutate] * mutationMultiplier, this.soylent.ingredients[ingredientToMutate].maxAmount);
     }
 
     return new Recipe(this.soylent, childIngredientAmounts);
@@ -56,7 +56,9 @@ Recipe.prototype.calculateTotalNutrients = function() {
 
     _.each(this.soylent.ingredients, function(ingredient, idx) {
         _.each(nutrients, function(nutrient) {
-            var ingredientNutrient = ingredient[nutrient] * this.ingredientAmounts[idx];
+            // this.ingredientAmounts[idx] is rounded to the nearest whole since we assume input
+            // is in the form of the smallest measurable unit.
+            var ingredientNutrient = ingredient[nutrient] * Math.round(this.ingredientAmounts[idx]);
             this.nutrientTotals[nutrient] = this.nutrientTotals[nutrient] || 0;
             this.nutrientTotals[nutrient] += ingredientNutrient;
         }, this);
@@ -88,6 +90,7 @@ Recipe.prototype.calculateCompleteness = function() {
         else {
             completeness = 0;
         }
+        completeness *= this.soylent.targetNutrients[nutrient].importanceFactor;
         //console.log(nutrient + ": " + completeness);
         nutrientCompleteness += completeness;
         this.nutrientCompleteness[nutrient] = completeness;
