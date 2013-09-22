@@ -88,6 +88,7 @@ Recipe.prototype.calculateCompleteness = function() {
         else {
             completeness = 0;
         }
+        completeness *= this.soylent.targetNutrients[nutrient].importanceFactor;
         //console.log(nutrient + ": " + completeness);
         nutrientCompleteness += completeness;
         this.nutrientCompleteness[nutrient] = completeness;
