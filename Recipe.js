@@ -65,6 +65,10 @@ Recipe.prototype.calculateTotalNutrients = function() {
 
 /**
  * Returns the recipes score. The closer the number is to 0, the better.
+ *
+ * If the nutrientCompleteness is less than the min, compare to that.
+ * If it is higher than the max, compare to that.
+ * If it is between them, completeness = 0.
  */
 Recipe.prototype.calculateCompleteness = function() {
 
@@ -73,13 +77,17 @@ Recipe.prototype.calculateCompleteness = function() {
 
     var nutrientCompleteness = 0;
     _.each(nutrients, function(nutrient) {
-        var completeness = this.nutrientTotals[nutrient] / this.soylent.targetNutrients[nutrient] * 100;
-        if (completeness > 100) {
-            completeness = completeness - 100;
+        var completeness = 0;
+        if (this.nutrientTotals[nutrient] < this.soylent.targetNutrients[nutrient].min) {
+            completeness = 100 - (this.nutrientTotals[nutrient] / this.soylent.targetNutrients[nutrient].min * 100);
+        }
+        else if (this.nutrientTotals[nutrient] > this.soylent.targetNutrients[nutrient].max) {
+            completeness = (this.nutrientTotals[nutrient] / this.soylent.targetNutrients[nutrient].max * 100) - 100;
         }
         else {
-            completeness = 100 - completeness;
+            completeness = 0;
         }
+        console.log(nutrient + ": " + completeness);
         nutrientCompleteness += completeness;
     }, this);
 
