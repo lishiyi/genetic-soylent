@@ -149,6 +149,9 @@ GeneticSoylent.prototype.render = function() {
     }));
 
     $('.nutrientInput').change(function(){
+        // split the name of the function by separator "_._"
+        // keyInfo[0] is the nutrient name
+        // keyInfo[1] is the name of the value for that nutrient
         var keyInfo = this.name.split("_._");
         testGeneticSoylent.targetNutrients[keyInfo[0]][keyInfo[1]] = this.value;
     });
