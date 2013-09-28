@@ -44,5 +44,15 @@ $(function(){
         testGeneticSoylent.mutationMultiplier = Number($(this).val());
     });
 
+    $('#inputJSON').change(function(){
+        // console.log("JSON change");
+        // console.log(this.value);
+        var jsonToRun = $.parseJSON(this.value);
+        testGeneticSoylent = new GeneticSoylent({
+                    ingredients: jsonToRun.ingredients,
+                    targetNutrients: jsonToRun.nutrientTargets
+        });
+    });
+
     testGeneticSoylent.render();
 });
