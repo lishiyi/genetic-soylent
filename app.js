@@ -78,17 +78,19 @@ $(function(){
             var trueKey = key.replace("_max","");
 
             // if the object for this nutrient doesn't exist yet, add it
-            if (!newNutrition[trueKey]){
+            // but only if the value > 0
+            if (!newNutrition[trueKey] && value > 0){
                 newNutrition[trueKey] = {};
             }
 
             // if this is a _max nutrition key, add it as the max value to trueKey
-            if (key.indexOf("_max") >= 0){
+            if (key.indexOf("_max") >= 0 && value > 0){
                 newNutrition[trueKey.replace("_max","")]["max"] = value;
             }
 
             // otherwise take this value as the min and set the default importanceFactor
-            else {
+            // but only if the min value is > 0
+            else if (value > 0) {
                 newNutrition[trueKey]["min"] = value;
                 newNutrition[trueKey]["importanceFactor"] = 1;
                 // we'll need to add a max for all values, so
