@@ -129,11 +129,11 @@ GeneticSoylent.prototype.render = function() {
           '<% if(!nutrientCompleteness[nutrient]) { classCompleteness = "success"; } else { classCompleteness = "danger"; } %>',
           '<tr class="<%= classCompleteness %>">',
             '<th class="text-center"><%= nutrient %></th>',
-            '<td><input name="nutrient[min]" class="nutrientInput" value="<%= targetProfile[nutrient].min %>"></input>',
+            '<td><input name="<%= nutrient %>_._min" class="nutrientInput" value="<%= targetProfile[nutrient].min %>"></input>',
             '<td><%= total[nutrient].toFixed(2) %></td>',
-            '<td><input name="nutrient[max]" class="nutrientInput" value="<%= targetProfile[nutrient].max %>"></input>',
+            '<td><input name="<%= nutrient %>_._max" class="nutrientInput" value="<%= targetProfile[nutrient].max %>"></input>',
             '<td><%= nutrientCompleteness[nutrient].toFixed(1) %>%</td>',
-            '<td><input name="nutrient[importanceFactor]" class="nutrientInput" value="<%= targetProfile[nutrient].importanceFactor %>"></input>',
+            '<td><input name="<%= nutrient %>_._importanceFactor" class="nutrientInput" value="<%= targetProfile[nutrient].importanceFactor %>"></input>',
           '</tr>',
         '<% }); %>',
       '</table>'
@@ -147,6 +147,11 @@ GeneticSoylent.prototype.render = function() {
         nutrientCompleteness: this.recipes[0].nutrientCompleteness,
         nutrientKeys: _.keys(this.targetNutrients)
     }));
+
+    $('.nutrientInput').change(function(){
+        var keyInfo = this.name.split("_._");
+        testGeneticSoylent.targetNutrients[keyInfo[0]][keyInfo[1]] = this.value;
+    });
 
     $('.generation').val(this.currentGeneration);
 
