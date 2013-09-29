@@ -79,6 +79,7 @@ $(function(){
             });
             // also, for each ingredient, add a maxAmount
             ingredients[key]["maxAmount"] = 500;
+            ingredients[key]["minAmount"] =   0;
         });
         return ingredients;
     }
