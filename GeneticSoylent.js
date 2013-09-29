@@ -73,8 +73,8 @@ GeneticSoylent.prototype.sortRecipes = function(a, b) {
 
 GeneticSoylent.prototype.render = function() {
 
-    var html = _.template([
-      '<table class="table">',
+    var ingredientHtml = _.template([
+      '<table class="table table-condensed">',
         '<tr>',
           '<th>Ingredient</th>',
           '<th class="text-center">Min</th>',
@@ -86,12 +86,12 @@ GeneticSoylent.prototype.render = function() {
         '</tr>',
         '<% _.each(ingredients, function(ingredient, idx) { %>',
           '<tr>',
-            '<td><%= ingredient.name %></td>',
-            '<td><input name="<%= idx %>_._minAmount" class="ingredientInput" value="<%= ingredient["minAmount"] %>"></input></td>',
+            '<td class="text-left"><%= ingredient.name %></td>',
+            '<td class="text-center"><input name="<%= idx %>_._minAmount" class="ingredientInput" value="<%= ingredient["minAmount"] %>"></input></td>',
             // amounts[idx] is rounded to the nearest whole since we assume that inputs are
             // given in the smallest measurable units
             '<td class="text-center"><%= Math.round(amounts[idx]) %></td>',
-            '<td><input name="<%= idx %>_._maxAmount" class="ingredientInput" value="<%= ingredient["maxAmount"] %>"></input></td>',
+            '<td class="text-center"><input name="<%= idx %>_._maxAmount" class="ingredientInput" value="<%= ingredient["maxAmount"] %>"></input></td>',
             // '<% _.each(nutrientKeys, function(nutrient, index) { %>',
             //   '<td class="text-center"><%= (ingredient[nutrient] * Math.round(amounts[idx])).toFixed(2) %></td>',
             // '<% }); %>',
@@ -125,35 +125,38 @@ GeneticSoylent.prototype.render = function() {
           // '<% }); %>',
         '</tr>',
       '</table>',
-      '<table class="table">',
-        '<tr>',
-          '<th>Nutrient</th>',
-          '<th>Min</th>',
-          '<th>Amount</th>',
-          '<th>Max</th>',
-          '<th>% Deviation</th>',
-          '<th>Priority</th>',
-        '</tr>',
-        '<% _.each(nutrientKeys, function(nutrient, index) { %>',
-          '<% var classCompleteness = ""; %>',
-          '<% if(!nutrientCompleteness[nutrient]) { classCompleteness = "success"; } else { classCompleteness = "danger"; } %>',
-          '<tr class="<%= classCompleteness %>">',
-            '<th class="text-center"><%= nutrient %></th>',
-            '<td><input name="<%= nutrient %>_._min" class="nutrientInput" value="<%= targetProfile[nutrient].min %>"></input></td>',
-            '<% var tooltip = "" %>',
-            '<% _.each(ingredients, function(ingredient, idx) { %>',
-              '<% tooltip += (ingredient[nutrient] * Math.round(amounts[idx])).toFixed(2) + "\t" + ingredient["name"] + "\\r" %>',
-            '<% }); %>',
-            '<td title="<%= tooltip %>"><%= total[nutrient].toFixed(2) %></td>',
-            '<td><input name="<%= nutrient %>_._max" class="nutrientInput" value="<%= targetProfile[nutrient].max %>"></input></td>',
-            '<td><%= nutrientCompleteness[nutrient].toFixed(1) %>%</td>',
-            '<td><input name="<%= nutrient %>_._importanceFactor" class="nutrientInput" value="<%= targetProfile[nutrient].importanceFactor %>"></input>',
-          '</tr>',
-        '<% }); %>',
-      '</table>'
     ].join(''));
 
-    $('#table').html(html({
+var nutrientHtml = _.template([
+  '<table class="table table-condensed">',
+    '<tr>',
+      '<th class="text-left">Nutrient</th>',
+      '<th class="text-center">Min</th>',
+      '<th class="text-center">Amount</th>',
+      '<th class="text-center">Max</th>',
+      '<th class="text-center">% Deviation</th>',
+      '<th class="text-center">Priority</th>',
+    '</tr>',
+    '<% _.each(nutrientKeys, function(nutrient, index) { %>',
+      '<% var classCompleteness = ""; %>',
+      '<% if(!nutrientCompleteness[nutrient]) { classCompleteness = "success"; } else { classCompleteness = "danger"; } %>',
+      '<tr class="<%= classCompleteness %>">',
+        '<th class="text-left"><%= nutrient %></th>',
+        '<td class="text-center"><input name="<%= nutrient %>_._min" class="nutrientInput" value="<%= targetProfile[nutrient].min %>"></input></td>',
+        '<% var tooltip = "" %>',
+        '<% _.each(ingredients, function(ingredient, idx) { %>',
+          '<% tooltip += (ingredient[nutrient] * Math.round(amounts[idx])).toFixed(2) + "\t" + ingredient["name"] + "\\r" %>',
+        '<% }); %>',
+        '<td class="text-center" title="<%= tooltip %>"><%= total[nutrient].toFixed(2) %></td>',
+        '<td class="text-center"><input name="<%= nutrient %>_._max" class="nutrientInput" value="<%= targetProfile[nutrient].max %>"></input></td>',
+        '<td class="text-center"><%= nutrientCompleteness[nutrient].toFixed(1) %>%</td>',
+        '<td class="text-center"><input name="<%= nutrient %>_._importanceFactor" class="nutrientInput" value="<%= targetProfile[nutrient].importanceFactor %>"></input>',
+      '</tr>',
+    '<% }); %>',
+  '</table>'
+].join(''));
+
+    $('#ingredientTable').html(ingredientHtml({
         total: this.recipes[0].nutrientTotals,
         amounts: this.recipes[0].ingredientAmounts,
         ingredients: this.ingredients,
@@ -161,6 +164,16 @@ GeneticSoylent.prototype.render = function() {
         nutrientCompleteness: this.recipes[0].nutrientCompleteness,
         nutrientKeys: _.keys(this.targetNutrients)
     }));
+
+    $('#nutrientTable').html(nutrientHtml({
+        total: this.recipes[0].nutrientTotals,
+        amounts: this.recipes[0].ingredientAmounts,
+        ingredients: this.ingredients,
+        targetProfile: this.targetNutrients,
+        nutrientCompleteness: this.recipes[0].nutrientCompleteness,
+        nutrientKeys: _.keys(this.targetNutrients)
+    }));
+
 
     $('.nutrientInput').change(function(){
         // split the name of the function by separator "_._"
