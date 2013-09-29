@@ -138,20 +138,23 @@ GeneticSoylent.prototype.render = function() {
           '<th class="text-center">Priority</th>',
         '</tr>',
         '<% _.each(nutrientKeys, function(nutrient, index) { %>',
-          '<% var classCompleteness = ""; %>',
-          '<% if(!nutrientCompleteness[nutrient]) { classCompleteness = "success"; } else { classCompleteness = "danger"; } %>',
-          '<tr class="<%= classCompleteness %>">',
-            '<th class="text-left"><%= nutrient %></th>',
-            '<td class="text-center"><input name="<%= nutrient %>_._min" class="nutrientInput" value="<%= targetProfile[nutrient].min %>"></input></td>',
-            '<% var tooltip = "" %>',
-            '<% _.each(ingredients, function(ingredient, idx) { %>',
-              '<% tooltip += (ingredient[nutrient] * Math.round(amounts[idx])).toFixed(2) + "\t" + ingredient["name"] + "\\r" %>',
-            '<% }); %>',
-            '<td class="text-center" title="<%= tooltip %>"><%= total[nutrient].toFixed(2) %></td>',
-            '<td class="text-center"><input name="<%= nutrient %>_._max" class="nutrientInput" value="<%= targetProfile[nutrient].max %>"></input></td>',
-            '<td class="text-center"><%= nutrientCompleteness[nutrient].toFixed(1) %>%</td>',
-            '<td class="text-center"><input name="<%= nutrient %>_._importanceFactor" class="nutrientInput" value="<%= targetProfile[nutrient].importanceFactor %>"></input>',
-          '</tr>',
+          '<% if(total[nutrient] != undefined){ %>',
+            '<% var classCompleteness = ""; %>',
+            // '<% console.log(nutrient + ": " + classCompleteness) %>',
+            '<% if(!nutrientCompleteness[nutrient]) { classCompleteness = "success"; } else { classCompleteness = "danger"; } %>',
+            '<tr class="<%= classCompleteness %>">',
+              '<th class="text-left"><%= nutrient %></th>',
+              '<td class="text-center"><input name="<%= nutrient %>_._min" class="nutrientInput" value="<%= targetProfile[nutrient].min %>"></input></td>',
+              '<% var tooltip = "" %>',
+              '<% _.each(ingredients, function(ingredient, idx) { %>',
+                '<% tooltip += (ingredient[nutrient] * Math.round(amounts[idx])).toFixed(2) + "\t" + ingredient["name"] + "\\r" %>',
+              '<% }); %>',
+              '<td class="text-center" title="<%= tooltip %>"><%= total[nutrient].toFixed(2) %></td>',
+              '<td class="text-center"><input name="<%= nutrient %>_._max" class="nutrientInput" value="<%= targetProfile[nutrient].max %>"></input></td>',
+              '<td class="text-center"><%= nutrientCompleteness[nutrient].toFixed(1) %>%</td>',
+              '<td class="text-center"><input name="<%= nutrient %>_._importanceFactor" class="nutrientInput" value="<%= targetProfile[nutrient].importanceFactor %>"></input>',
+            '</tr>',
+          '<% }; %>',
         '<% }); %>',
       '</table>'
     ].join(''));
@@ -165,13 +168,47 @@ GeneticSoylent.prototype.render = function() {
         nutrientKeys: _.keys(this.targetNutrients)
     }));
 
+    // specify the nutrient keys we want in the second column
+    var nutrientTableKeysForFirstColumn = [
+        "calories",
+        "carbs",
+        "protein",
+        "fat",
+        "omega_3",
+        "omega_6",
+        "fiber",
+        "vitamin_a",
+        "vitamin_b6",
+        "vitamin_b12",
+        "vitamin_c",
+        "vitamin_d",
+        "vitamin_e",
+        "vitamin_k"
+    ];
+
+    // put all other nutrient keys into the third column
+    var nutrientTableKeysForSecondColumn = _.keys(this.targetNutrients);
+    nutrientTableKeysForSecondColumn = $.grep(nutrientTableKeysForSecondColumn, function(value){
+      return $.inArray(value, nutrientTableKeysForFirstColumn) + 1;
+    }, true);
+
     $('#nutrientTable').html(nutrientHtml({
         total: this.recipes[0].nutrientTotals,
         amounts: this.recipes[0].ingredientAmounts,
         ingredients: this.ingredients,
         targetProfile: this.targetNutrients,
         nutrientCompleteness: this.recipes[0].nutrientCompleteness,
-        nutrientKeys: _.keys(this.targetNutrients)
+        //nutrientKeys: _.keys(this.targetNutrients)
+        nutrientKeys: nutrientTableKeysForFirstColumn
+    }));
+
+    $('#nutrientTableRemainder').html(nutrientHtml({
+        total: this.recipes[0].nutrientTotals,
+        amounts: this.recipes[0].ingredientAmounts,
+        ingredients: this.ingredients,
+        targetProfile: this.targetNutrients,
+        nutrientCompleteness: this.recipes[0].nutrientCompleteness,
+        nutrientKeys: nutrientTableKeysForSecondColumn.sort()
     }));
 
 
