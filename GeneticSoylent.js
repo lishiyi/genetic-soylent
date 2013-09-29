@@ -114,6 +114,32 @@ GeneticSoylent.prototype.render = function() {
             '<td class="text-center"><%= nutrientCompleteness[nutrient].toFixed(1) %>%</td>',
           '<% }); %>',
         '</tr>',
+      '</table>',
+      '<table class="table">',
+        '<tr>',
+          '<th>Nutrient</th>',
+          '<th>Min</th>',
+          '<th>Amount</th>',
+          '<th>Max</th>',
+          '<th>% Deviation</th>',
+          '<th>Priority</th>',
+        '</tr>',
+        '<% _.each(nutrientKeys, function(nutrient, index) { %>',
+          '<% var classCompleteness = ""; %>',
+          '<% if(!nutrientCompleteness[nutrient]) { classCompleteness = "success"; } else { classCompleteness = "danger"; } %>',
+          '<tr class="<%= classCompleteness %>">',
+            '<th class="text-center"><%= nutrient %></th>',
+            '<td><input name="<%= nutrient %>_._min" class="nutrientInput" value="<%= targetProfile[nutrient].min %>"></input>',
+            '<% var tooltip = "" %>',
+            '<% _.each(ingredients, function(ingredient, idx) { %>',
+              '<% tooltip += (ingredient[nutrient] * Math.round(amounts[idx])).toFixed(2) + "\t" + ingredient["name"] + "\\r" %>',
+            '<% }); %>',
+            '<td title="<%= tooltip %>"><%= total[nutrient].toFixed(2) %></td>',
+            '<td><input name="<%= nutrient %>_._max" class="nutrientInput" value="<%= targetProfile[nutrient].max %>"></input>',
+            '<td><%= nutrientCompleteness[nutrient].toFixed(1) %>%</td>',
+            '<td><input name="<%= nutrient %>_._importanceFactor" class="nutrientInput" value="<%= targetProfile[nutrient].importanceFactor %>"></input>',
+          '</tr>',
+        '<% }); %>',
       '</table>'
     ].join(''));
 
@@ -125,6 +151,14 @@ GeneticSoylent.prototype.render = function() {
         nutrientCompleteness: this.recipes[0].nutrientCompleteness,
         nutrientKeys: _.keys(this.targetNutrients)
     }));
+
+    $('.nutrientInput').change(function(){
+        // split the name of the function by separator "_._"
+        // keyInfo[0] is the nutrient name
+        // keyInfo[1] is the name of the value for that nutrient
+        var keyInfo = this.name.split("_._");
+        testGeneticSoylent.targetNutrients[keyInfo[0]][keyInfo[1]] = this.value;
+    });
 
     $('.generation').val(this.currentGeneration);
 

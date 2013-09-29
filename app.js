@@ -59,6 +59,19 @@ $(function(){
         $.each(ingredients, function(key, value){
             // divide each value by serving size to normalize them
             var servingSize = ingredients[key]["serving"];
+
+            // if servingSize = 0, we use amount instead
+            if (!servingSize){
+                servingSize = ingredients[key]["amount"];
+            }
+
+            // if both are 0, we use 1
+            if (!servingSize){
+                servingSize = 1;
+            }
+
+            // set the nutrient value for each nutrient to the amount in
+            // 1 unit of this ingredient (usually 1g, 1pill)
             $.each(value, function(ingredientNutrient, ingredientValue){
                 if (Number(ingredients[key][ingredientNutrient])) {
                    ingredients[key][ingredientNutrient] = ingredientValue/servingSize;

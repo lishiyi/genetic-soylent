@@ -5,6 +5,8 @@ Modifications to [nick's](https://github.com/nick) [genetic soylent](https://git
 *   Addition of all nutrients
 *   Rounds ingredients to whole values
 *   Allows for ranking of nutrients
+*   Allows import of recipe JSON from [diy.soylent.me](http://diy.soylent.me)
+*   Added UI for max/min nutrient values and priority. UI still needs improvement.
 
 A demo of my latest test version is here: http://2potatoes.github.io/genetic-soylent/
 
