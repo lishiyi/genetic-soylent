@@ -22,37 +22,39 @@
 
 </head>
 <body>
-    <div class="container">
+    <script type="text/javascript" src="GeneticSoylent.js"></script>
+    <script type="text/javascript" src="Recipe.js"></script>
+    <script type="text/javascript" src="app.js"></script>
 
-        <script type="text/javascript" src="GeneticSoylent.js"></script>
-        <script type="text/javascript" src="Recipe.js"></script>
-        <script type="text/javascript" src="app.js"></script>
-
-        <h1>Genetic Soylent</h1>
-        <p><em>Random solutions to interesting problems</em></p>
-        <p><br></p>
-
-        <form class="form-inline pull-right">
-            <label>Population:</label>
-            <input class="population form-control input-sm" type="text" style="width: 50px; text-align: center" value="100" />
-            <label style="margin-left: 20px;">Mutation probability:</label>
-            <input class="mutation-probability form-control" type="text" style="text-align: center; width: 50px" value="0.5" />
-            <label style="margin-left: 20px;">Mutation multiplier:</label>
-            <input class="mutation-multiplier form-control" type="text" style="text-align: center; width: 50px" value="0.1" />
-            <label style="margin-left: 20px;">Death rate:</label>
-            <input class="death-rate form-control input-sm" type="text" style="width: 50px; text-align: center" value="0.3" />
-        </form>
-
-        <form class="form-inline">
-            <label>Generation:</label>
-            <input class="generation form-control input-sm" type="text" style="width: 50px; text-align: center; margin-right: 20px; margin-left: 10px" />
-            <a class="btn btn-primary start-genetic-algorithm" href="#"><i class="icon-play"></i></a>
-            <a class="btn btn-primary pause-genetic-algorithm" href="#" style="display: none;"><i class="icon-pause"></i></a>
-            <a class="btn btn-default step-genetic-algorithm" href="#"><i class="icon-step-forward"></i></a>
-            <a class="btn btn-default reset-genetic-algorithm" href="#"><i class="icon-refresh"></i></a>
-        </form>
-
+    <div class="row">
+        <div class="col-xs-4">
+            <h1 align="center">Genetic Soylent</h1>
+            <p align="center"><em>Random solutions to interesting problems</em></p>
+            <p><br></p>
+        </div>
+        <div class="col-xs-8>">
+            <br />
+            <form class="form-inline" align="center">
+                <label>Generation:</label>
+                <input class="generation form-control input-sm" type="text" style="width: 50px; text-align: center; margin-right: 20px; margin-left: 10px" />
+                <a class="btn btn-primary start-genetic-algorithm" href="#"><i class="icon-play"></i></a>
+                <a class="btn btn-primary pause-genetic-algorithm" href="#" style="display: none;"><i class="icon-pause"></i></a>
+                <a class="btn btn-default step-genetic-algorithm" href="#"><i class="icon-step-forward"></i></a>
+                <a class="btn btn-default reset-genetic-algorithm" href="#"><i class="icon-refresh"></i></a>
+            </form>
+            <form class="form-inline" align="center">
+                <label>Population:</label>
+                <input class="population form-control input-sm" type="text" style="width: 50px; text-align: center" value="100" />
+                <label style="margin-left: 20px;">Mutation probability:</label>
+                <input class="mutation-probability form-control" type="text" style="text-align: center; width: 50px" value="0.5" />
+                <label style="margin-left: 20px;">Mutation multiplier:</label>
+                <input class="mutation-multiplier form-control" type="text" style="text-align: center; width: 50px" value="0.1" />
+                <label style="margin-left: 20px;">Death rate:</label>
+                <input class="death-rate form-control input-sm" type="text" style="width: 50px; text-align: center" value="0.3" />
+            </form>
+        </div>
     </div>
+
     <div class="row">
         <div id="ingredientTable" class="col-xs-4"></div>
         <div id="nutrientTable" class="col-xs-4"></div>
