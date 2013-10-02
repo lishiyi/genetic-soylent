@@ -120,5 +120,30 @@ $(function(){
         return newNutrition;
     }
 
+    // Get parameter from URL
+    // Taken from: https://gist.github.com/varemenos/2531765
+    function getUrlVar(key){
+        var result = new RegExp(key + "=([^&]*)", "i").exec(window.location.search);
+        return result && unescape(result[1]) || "";
+    }
+
+    $(document).ready(function() {
+        var loadRecipe = getUrlVar("recipe");
+        if (loadRecipe) {
+            var queryString = "http://diy.soylent.me/recipes/" + loadRecipe + "/json?callback=?";
+            // As always, thanks stackoverflow:
+            // http://stackoverflow.com/questions/6809053/simple-jquery-php-and-jsonp-example
+            $.getJSON(queryString,'geneticCallback',function(dataToLoad){
+                testGeneticSoylent = new GeneticSoylent({
+                            ingredients: convertJSONIngredientsToGeneticIngredients(dataToLoad.ingredients),
+                            targetNutrients: convertJSONNutritionToGeneticNutrition(dataToLoad.nutrientTargets)
+                });
+
+                testGeneticSoylent.reset();
+                testGeneticSoylent.render();
+            });
+        }
+    });
+
     testGeneticSoylent.render();
 });
