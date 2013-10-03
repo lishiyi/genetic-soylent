@@ -100,6 +100,8 @@ $(function(){
             // if this is a _max nutrition key, add it as the max value to trueKey
             if (key.indexOf("_max") >= 0 && value > 0){
                 newNutrition[trueKey.replace("_max","")]["max"] = value;
+                newNutrition[trueKey]["min"] = 0;
+                newNutrition[trueKey]["importanceFactor"] = 1;
             }
 
             // otherwise take this value as the min and set the default importanceFactor
