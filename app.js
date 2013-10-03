@@ -100,6 +100,8 @@ $(function(){
             // if this is a _max nutrition key, add it as the max value to trueKey
             if (key.indexOf("_max") >= 0 && value > 0){
                 newNutrition[trueKey.replace("_max","")]["max"] = value;
+                newNutrition[trueKey]["min"] = 0;
+                newNutrition[trueKey]["importanceFactor"] = 1;
             }
 
             // otherwise take this value as the min and set the default importanceFactor
@@ -117,6 +119,11 @@ $(function(){
 
         // we delete "name", since it's not a nutrient
         delete newNutrition["name"];
+
+        // we make the calorie defaults more reasonable
+        newNutrition["calories"]["max"] = newNutrition["calories"]["min"] + 100;
+        newNutrition["calories"]["min"] = newNutrition["calories"]["min"] - 100;
+
         return newNutrition;
     }
 
