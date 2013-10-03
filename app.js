@@ -119,6 +119,11 @@ $(function(){
 
         // we delete "name", since it's not a nutrient
         delete newNutrition["name"];
+
+        // we make the calorie defaults more reasonable
+        newNutrition["calories"]["max"] = newNutrition["calories"]["min"] + 100;
+        newNutrition["calories"]["min"] = newNutrition["calories"]["min"] - 100;
+
         return newNutrition;
     }
 
