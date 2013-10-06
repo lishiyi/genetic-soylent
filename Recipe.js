@@ -31,7 +31,7 @@ Recipe.prototype.createChildWith = function(mate) {
 
     // Pick random ingredient amounts from each parent.
     var pos = Math.floor(Math.random() * this.soylent.ingredients.length);
-    var childIngredientAmounts = [];this.ingredientAmounts.slice(0, pos).concat(mate.ingredientAmounts.slice(pos));
+    var childIngredientAmounts = [];
     for (var i=0; i< this.soylent.ingredients.length; i++) {
         var randomParent = Math.random() > 0.5 ? this : mate;
         childIngredientAmounts.push(randomParent.ingredientAmounts[i]);
