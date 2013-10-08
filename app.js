@@ -80,6 +80,9 @@ $(function(){
             // also, for each ingredient, add a maxAmount
             ingredients[key]["maxAmount"] = 500;
             ingredients[key]["minAmount"] =   0;
+
+            // get the cost of the item per unit of measure
+            ingredients[key]["cost"] = ingredients[key]["item_cost"] / ingredients[key]["container_size"];
         });
         return ingredients;
     }
@@ -123,6 +126,13 @@ $(function(){
         // we make the calorie defaults more reasonable
         newNutrition["calories"]["max"] = newNutrition["calories"]["min"] + 100;
         newNutrition["calories"]["min"] = newNutrition["calories"]["min"] - 100;
+
+        // also add a cost target
+        newNutrition["cost"] = {
+            min: 0,
+            max: 10,
+            importanceFactor: 1
+        };
 
         return newNutrition;
     }
