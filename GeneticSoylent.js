@@ -146,6 +146,7 @@ GeneticSoylent.prototype.render = function() {
 
     // specify the nutrient keys we want in the second column
     var nutrientTableKeysForFirstColumn = [
+        "cost",
         "calories",
         "carbs",
         "protein",
