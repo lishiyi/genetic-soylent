@@ -12,6 +12,8 @@ var GeneticSoylent = function(opts) {
     this.ingredients = opts.ingredients;
     this.targetNutrients = opts.targetNutrients;
 
+    this.ratios = this.defaultRatios();
+
     this.reset();
 };
 
@@ -70,6 +72,19 @@ GeneticSoylent.prototype.sortRecipes = function(a, b) {
         }
     });
 };
+
+GeneticSoylent.prototype.defaultRatios = function() {
+    return {
+       'Calcium:Phosphorus': {min: 1, max: 2.5, numerator: "calcium", denominator: "phosphorus", importanceFactor: 1},
+       'Calcium:Magnesium':  {min: 1, max: 2, numerator: "calcium", denominator: "magnesium", importanceFactor: 1},
+       'Potassium:Sodium':  {min: 2, max: 999, numerator: "potassium", denominator: "sodium", importanceFactor: 1},
+       'Iron:Copper':  {min: 10, max: 17, numerator: "iron", denominator: "copper", importanceFactor: 1},
+       'Zinc:Copper':  {min: 10, max: 15, numerator: "zinc", denominator: "copper", importanceFactor: 1},
+       'Iron:Zinc':  {min: 0.01, max: 2, numerator: "iron", denominator: "zinc", importanceFactor: 1},
+       'Omega-6:Omega-3':  {min: 1, max: 2.3, numerator: "omega_6", denominator: "omega_3", importanceFactor: 1},
+    };
+};
+
 
 GeneticSoylent.prototype.render = function() {
 
