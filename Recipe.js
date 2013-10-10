@@ -111,6 +111,28 @@ Recipe.prototype.calculateCompleteness = function() {
         this.nutrientCompleteness[nutrient] = completeness;
     }, this);
 
+    this.ratioCompleteness = {};
+    this.ratioAmounts = {};
+    _.each(_.keys(this.soylent.ratios), function(theKey) {
+        var ratioEvaluation = this.nutrientTotals[this.soylent.ratios[theKey]["numerator"]] / this.nutrientTotals[this.soylent.ratios[theKey]["denominator"]];
+        if (ratioEvaluation < this.soylent.ratios[theKey].min) {
+            completeness = 100 - ((ratioEvaluation / this.soylent.ratios[theKey].min) * 100);
+        }
+        else if (ratioEvaluation > this.soylent.ratios[theKey].max) {
+            completeness = ((ratioEvaluation / this.soylent.ratios[theKey].max * 100) - 100);
+        }
+        else {
+            completeness = 0;
+        }
+        // console.log(this.soylent.ratios[theKey]["numerator"] + ": " + this.nutrientTotals[this.soylent.ratios[theKey]["numerator"]] + ", " + this.soylent.ratios[theKey]["denominator"] + ": " + this.nutrientTotals[this.soylent.ratios[theKey]["denominator"]]);
+        // console.log(this.soylent.ratios[theKey].min + " -- " + ratioEvaluation + " -- " + this.soylent.ratios[theKey].max);
+        // console.log("Complete: " + completeness);
+
+        nutrientCompleteness += completeness;
+        this.ratioCompleteness[theKey] = completeness;
+        this.ratioAmounts[theKey] = ratioEvaluation;
+    }, this);
+
     this.completenessScore = -nutrientCompleteness;
 };
 
