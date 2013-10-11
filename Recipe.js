@@ -114,7 +114,7 @@ Recipe.prototype.calculateCompleteness = function() {
     this.ratioCompleteness = {};
     this.ratioAmounts = {};
     _.each(_.keys(this.soylent.ratios), function(theKey) {
-        var ratioEvaluation = this.nutrientTotals[this.soylent.ratios[theKey]["numerator"]] / this.nutrientTotals[this.soylent.ratios[theKey]["denominator"]];
+        var ratioEvaluation = this.nutrientTotals[this.soylent.ratios[theKey]["numerator"]] / this.nutrientTotals[this.soylent.ratios[theKey]["denominator"]] * this.soylent.ratios[theKey].unitCorrection;
         if (ratioEvaluation < this.soylent.ratios[theKey].min) {
             completeness = 100 - ((ratioEvaluation / this.soylent.ratios[theKey].min) * 100);
         }
