@@ -12,6 +12,8 @@ var GeneticSoylent = function(opts) {
     this.ingredients = opts.ingredients;
     this.targetNutrients = opts.targetNutrients;
 
+    this.ratios = this.defaultRatios();
+
     this.reset();
 };
 
@@ -70,6 +72,19 @@ GeneticSoylent.prototype.sortRecipes = function(a, b) {
         }
     });
 };
+
+GeneticSoylent.prototype.defaultRatios = function() {
+    return {
+       'Calcium:Phosphorus': {min: 1, max: 2.5, numerator: "calcium", denominator: "phosphorus", unitCorrection: 1, importanceFactor: 1},
+       'Calcium:Magnesium':  {min: 1, max: 2, numerator: "calcium", denominator: "magnesium", unitCorrection: 1000, importanceFactor: 1},
+       'Potassium:Sodium':  {min: 2, max: 999, numerator: "potassium", denominator: "sodium", unitCorrection: 1, importanceFactor: 1},
+       'Iron:Copper':  {min: 10, max: 17, numerator: "iron", denominator: "copper", unitCorrection: 1, importanceFactor: 1},
+       'Zinc:Copper':  {min: 10, max: 15, numerator: "zinc", denominator: "copper", unitCorrection: 1, importanceFactor: 1},
+       'Iron:Zinc':  {min: 0.01, max: 2, numerator: "iron", denominator: "zinc", unitCorrection: 1, importanceFactor: 1},
+       'Omega-6:Omega-3':  {min: 1, max: 2.3, numerator: "omega_6", denominator: "omega_3", unitCorrection: 1, importanceFactor: 1},
+    };
+};
+
 
 GeneticSoylent.prototype.render = function() {
 
@@ -131,6 +146,25 @@ GeneticSoylent.prototype.render = function() {
             '</tr>',
           '<% }; %>',
         '<% }); %>',
+
+        //ratioCompleteness
+        '<% if(typeof ratioKeys != "undefined"){ %>',
+          '<% _.each(ratioKeys, function(theRatio, index) { %>',
+              '<% var classCompleteness = ""; %>',
+              // '<% console.log(nutrient + ": " + classCompleteness) %>',
+              '<% if(!ratioCompleteness[theRatio]) { classCompleteness = "success"; } else { classCompleteness = "danger"; } %>',
+              '<tr class="<%= classCompleteness %>">',
+                '<th class="text-left"><%= theRatio %></th>',
+                '<td class="text-center"><input name="<%= theRatio %>_._min" class="ratioInput" value="<%= targetRatios[theRatio].min %>"></input></td>',
+                '<td class="text-center"><%= ratioAmounts[theRatio].toFixed(2) %></td>',
+                '<td class="text-center"><input name="<%= theRatio %>_._max" class="ratioInput" value="<%= targetRatios[theRatio].max %>"></input></td>',
+                '<td class="text-center"><%= ratioCompleteness[theRatio].toFixed(1) %>%</td>',
+                '<td class="text-center"><input name="<%= theRatio %>_._importanceFactor" class="ratioInput" value="<%= targetRatios[theRatio].importanceFactor %>"></input>',
+              '</tr>',
+          '<% }); %>',
+        '<% }; %>',
+
+
       '</table>'
     ].join(''));
 
@@ -176,7 +210,12 @@ GeneticSoylent.prototype.render = function() {
         targetProfile: this.targetNutrients,
         nutrientCompleteness: this.recipes[0].nutrientCompleteness,
         //nutrientKeys: _.keys(this.targetNutrients)
-        nutrientKeys: nutrientTableKeysForFirstColumn
+        nutrientKeys: nutrientTableKeysForFirstColumn,
+
+        ratioKeys: _.keys(this.recipes[0].ratioCompleteness),
+        ratioCompleteness: this.recipes[0].ratioCompleteness,
+        ratioAmounts: this.recipes[0].ratioAmounts,
+        targetRatios: this.ratios,
     }));
 
     $('#nutrientTableRemainder').html(nutrientHtml({
@@ -195,6 +234,14 @@ GeneticSoylent.prototype.render = function() {
         // keyInfo[1] is the name of the value for that nutrient
         var keyInfo = this.name.split("_._");
         testGeneticSoylent.targetNutrients[keyInfo[0]][keyInfo[1]] = this.value;
+    });
+
+    $('.ratioInput').change(function(){
+        // split the name of the function by separator "_._"
+        // keyInfo[0] is the nutrient name
+        // keyInfo[1] is the name of the value for that nutrient
+        var keyInfo = this.name.split("_._");
+        testGeneticSoylent.ratios[keyInfo[0]][keyInfo[1]] = this.value;
     });
 
     $('.ingredientInput').change(function(){
