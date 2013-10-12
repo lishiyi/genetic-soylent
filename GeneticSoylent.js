@@ -155,11 +155,11 @@ GeneticSoylent.prototype.render = function() {
               '<% if(!ratioCompleteness[theRatio]) { classCompleteness = "success"; } else { classCompleteness = "danger"; } %>',
               '<tr class="<%= classCompleteness %>">',
                 '<th class="text-left"><%= theRatio %></th>',
-                '<td class="text-center"><input name="<%= theRatio %>_._min" class="nutrientInput" value="<%= targetRatios[theRatio].min %>"></input></td>',
+                '<td class="text-center"><input name="<%= theRatio %>_._min" class="ratioInput" value="<%= targetRatios[theRatio].min %>"></input></td>',
                 '<td class="text-center"><%= ratioAmounts[theRatio].toFixed(2) %></td>',
-                '<td class="text-center"><input name="<%= theRatio %>_._max" class="nutrientInput" value="<%= targetRatios[theRatio].max %>"></input></td>',
+                '<td class="text-center"><input name="<%= theRatio %>_._max" class="ratioInput" value="<%= targetRatios[theRatio].max %>"></input></td>',
                 '<td class="text-center"><%= ratioCompleteness[theRatio].toFixed(1) %>%</td>',
-                '<td class="text-center"><input name="<%= theRatio %>_._importanceFactor" class="nutrientInput" value="<%= targetRatios[theRatio].importanceFactor %>"></input>',
+                '<td class="text-center"><input name="<%= theRatio %>_._importanceFactor" class="ratioInput" value="<%= targetRatios[theRatio].importanceFactor %>"></input>',
               '</tr>',
           '<% }); %>',
         '<% }; %>',
@@ -234,6 +234,14 @@ GeneticSoylent.prototype.render = function() {
         // keyInfo[1] is the name of the value for that nutrient
         var keyInfo = this.name.split("_._");
         testGeneticSoylent.targetNutrients[keyInfo[0]][keyInfo[1]] = this.value;
+    });
+
+    $('.ratioInput').change(function(){
+        // split the name of the function by separator "_._"
+        // keyInfo[0] is the nutrient name
+        // keyInfo[1] is the name of the value for that nutrient
+        var keyInfo = this.name.split("_._");
+        testGeneticSoylent.ratios[keyInfo[0]][keyInfo[1]] = this.value;
     });
 
     $('.ingredientInput').change(function(){

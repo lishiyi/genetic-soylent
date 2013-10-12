@@ -128,6 +128,7 @@ Recipe.prototype.calculateCompleteness = function() {
         // console.log(this.soylent.ratios[theKey].min + " -- " + ratioEvaluation + " -- " + this.soylent.ratios[theKey].max);
         // console.log("Complete: " + completeness);
 
+        completeness *= this.soylent.ratios[theKey].importanceFactor;
         nutrientCompleteness += completeness;
         this.ratioCompleteness[theKey] = completeness;
         this.ratioAmounts[theKey] = ratioEvaluation;
