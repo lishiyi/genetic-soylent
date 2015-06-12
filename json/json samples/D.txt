@@ -1,106 +1,6 @@
-<html>
-<head>
-    <title>Genetic Soylent</title>
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="http:/cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.1/underscore-min.js"></script>
-    <style>
-        .table-condensed {
-            font-size: 10px;
-        }
-        .ingredientInput {
-            width: 50px;
-            text-align: center;
-        }
-        .nutrientInput {
-            width: 50px;
-            text-align: center;
-        }
-        .ratioInput {
-            width: 50px;
-            text-align: center;
-        }
-    </style>
-
-</head>
-<body>
-    <script type="text/javascript" src="js/GeneticSoylent.js"></script>
-    <script type="text/javascript" src="js/Recipe.js"></script>
-    <script type="text/javascript" src="js/app.js"></script>
-
-    <div class="row">
-        <div class="col-xs-4">
-            <h1 align="center">Genetic Soylent</h1>
-            <p align="center"><em>Random solutions to interesting problems</em></p>
-            <p><br></p>
-        </div>
-        <div class="col-xs-8>">
-            <br />
-            <form class="form-inline" align="center">
-                <label>Generation:</label>
-                <input class="generation form-control input-sm" type="text" style="width: 50px; text-align: center; margin-right: 20px; margin-left: 10px" />
-                <a class="btn btn-primary start-genetic-algorithm" href="#"><i class="icon-play"></i></a>
-                <a class="btn btn-primary pause-genetic-algorithm" href="#" style="display: none;"><i class="icon-pause"></i></a>
-                <a class="btn btn-default step-genetic-algorithm" href="#"><i class="icon-step-forward"></i></a>
-                <a class="btn btn-default reset-genetic-algorithm" href="#"><i class="icon-refresh"></i></a>
-            </form>
-            <form class="form-inline" align="center">
-                <label>Population:</label>
-                <input class="population form-control input-sm" type="text" style="width: 50px; text-align: center" value="100" />
-                <label style="margin-left: 20px;">Mutation probability:</label>
-                <input class="mutation-probability form-control" type="text" style="text-align: center; width: 50px" value="0.5" />
-                <label style="margin-left: 20px;">Mutation multiplier:</label>
-                <input class="mutation-multiplier form-control" type="text" style="text-align: center; width: 50px" value="0.1" />
-                <label style="margin-left: 20px;">Death rate:</label>
-                <input class="death-rate form-control input-sm" type="text" style="width: 50px; text-align: center" value="0.3" />
-            </form>
-        </div>
-    </div>
-
-    <div class="row">
-        <div id="ingredientTable" class="col-xs-4"></div>
-        <div id="nutrientTable" class="col-xs-4"></div>
-        <div id="nutrientTableRemainder" class="col-xs-4"></div>
-    </div>
-    <div class="container">
-
-        <h2>What is this?</h2>
-        <p>Genetic Soylent is an attempt to automatically create a Soylent recipe given a list of ingredients and a target nutrient profile.</p>
-        <p>You can play with it by pressing <i class="icon-step-forward"></i> to step to the next generation, <i class="icon-play"></i> to step to next generations automatically and <i class="icon-refresh"></i> to reset the simulation.</p>
-        <p>Original code by nick: <a href="http://github.com/nick/genetic-soylent">http://github.com/nick/genetic-soylent</a></p>
-        <p>This version by 2potatoes: <a href="http://github.com/2potatoes/genetic-soylent">http://github.com/2potatoes/genetic-soylent</a></p>
-        <p>Notes on genetic soylent can be found on <a href="http://spudlent.blogspot.com/search/label/Genetic%20Soylent">2potatoes blog</a>.</p>
-        <h2>How it works</h2>
-        <ul>
-            <li>Generate 100 recipes, each recipe containing a random amount of each ingredient.</li>
-            <li>Score each recipe based on how close all the nutrients are to 100%.</li>
-            <li>Sort the recipes from best to worst.</li>
-            <li>Show the best one in the table above.</li>
-        </ul>
-        <p>On each subsequent 'generation', the following happens:</p>
-        <ul>
-            <li>Remove the worst 30 recipes from the list</li>
-            <li>Create 30 new Child recipes containing ingredient amounts taken from two randomly selected Parent recipes.</li>
-            <li>Ingredient amounts in each Child can also be mutated if the 'mutation probability' is met.</li>
-            <li>A mutation works by taking a random ingredient and increasing or decreasing the amount defined by the 'mutation multiplier'. For example, a mutation multiplier of 0.1 will increase or decrease the amount of an ingredient by 10%.</li>
-            <li>Finally, we re-calculate the scores for each recipe, sort them, and show the best one in the table.</li>
-        </ul>
-
-    </div>
-    <div class="container">
-        <h2>Choose Your Own Recipe</h2>
-        <p>This should now work with any recipe from <a href='http://diy.soylent.me'>diy.soylent.me</a>. Find your favorite recipe, add "/json" to the end of the URL, copy the resulting text and paste it into the box below.</p>
-        <p><em>Warning:</em> This is still very experimental. I've tried it with my own recipe and one other and it has worked, but I haven't double checked the numbers.</p>
-        <textarea id="inputJSON" rows="10" style="width:100%">
-        </textarea>
-    </div>
-
-    <script type="text/javascript">
-
-        var ingredients = [
-            {
+{
+  "ingredients": [
+    {
       "persistedAsin": "",
       "name": "Soy Lecithin Granules",
       "form": "Powder",
@@ -155,11 +55,11 @@
       "panthothenic": 0,
       "biotin": 0,
       "choline": 275,
-      "_id": "5579efc6039f44c130eb3a20",
+      "_id": "5579e396039f44c130eb392f",
       "currency": "$",
       "asin": "",
       "volumeStr": "",
-      "id": "5579efc6039f44c130eb3a20"
+      "id": "5579e396039f44c130eb392f"
     },
     {
       "persistedAsin": "B004VLVG0M",
@@ -216,11 +116,11 @@
       "panthothenic": 0,
       "biotin": 0,
       "choline": 0,
-      "_id": "5579efc6039f44c130eb3a1f",
+      "_id": "5579e396039f44c130eb392e",
       "currency": "$",
       "asin": "B004VLVG0M",
       "volumeStr": "",
-      "id": "5579efc6039f44c130eb3a1f"
+      "id": "5579e396039f44c130eb392e"
     },
     {
       "persistedAsin": "",
@@ -231,7 +131,7 @@
       "item_cost": 44,
       "source": "Amazon",
       "url": "http://www.bobsredmill.com/raw-shelled-sunflower-seeds.html",
-      "amount": 44,
+      "amount": 55,
       "volume": null,
       "volume_unit": "cup",
       "serving": 100,
@@ -277,11 +177,11 @@
       "panthothenic": 1.13,
       "biotin": 66,
       "choline": 55.1,
-      "_id": "5579efc6039f44c130eb3a1e",
+      "_id": "5579e396039f44c130eb392d",
       "currency": "$",
       "asin": "",
       "volumeStr": "",
-      "id": "5579efc6039f44c130eb3a1e"
+      "id": "5579e396039f44c130eb392d"
     },
     {
       "persistedAsin": "",
@@ -292,7 +192,7 @@
       "item_cost": 55,
       "source": "Midwest Supplies",
       "url": "http://www.midwestsupplies.com/caramel-crystal-cara-malt.html",
-      "amount": 204,
+      "amount": 108,
       "volume": null,
       "volume_unit": "cup",
       "serving": 100,
@@ -338,11 +238,11 @@
       "panthothenic": 0.577,
       "biotin": 0,
       "choline": 0,
-      "_id": "5579efc6039f44c130eb3a1d",
+      "_id": "5579e396039f44c130eb392c",
       "currency": "$",
       "asin": "",
       "volumeStr": "",
-      "id": "5579efc6039f44c130eb3a1d"
+      "id": "5579e396039f44c130eb392c"
     },
     {
       "persistedAsin": "",
@@ -353,7 +253,7 @@
       "item_cost": 350,
       "source": "Amazon",
       "url": "r",
-      "amount": 46,
+      "amount": 89,
       "volume": null,
       "volume_unit": "cup",
       "serving": 27,
@@ -399,11 +299,11 @@
       "panthothenic": 0,
       "biotin": 0,
       "choline": 0,
-      "_id": "5579efc6039f44c130eb3a1c",
+      "_id": "5579e396039f44c130eb392b",
       "currency": "$",
       "asin": "",
       "volumeStr": "",
-      "id": "5579efc6039f44c130eb3a1c"
+      "id": "5579e396039f44c130eb392b"
     },
     {
       "persistedAsin": "B001DB4MFO",
@@ -414,7 +314,7 @@
       "item_cost": 245,
       "source": "Amazon",
       "url": "https://www.amazon.com/dp/B001DB4MFO?tag=19-82341-20",
-      "amount": 40,
+      "amount": 65,
       "volume": null,
       "volume_unit": "cup",
       "serving": 33,
@@ -460,11 +360,11 @@
       "panthothenic": 0,
       "biotin": 0,
       "choline": 0,
-      "_id": "5579efc6039f44c130eb3a1b",
+      "_id": "5579e396039f44c130eb392a",
       "currency": "$",
       "asin": "B001DB4MFO",
       "volumeStr": "",
-      "id": "5579efc6039f44c130eb3a1b"
+      "id": "5579e396039f44c130eb392a"
     },
     {
       "persistedAsin": "B00028M47C",
@@ -475,7 +375,7 @@
       "item_cost": 98.96,
       "source": "Amazon",
       "url": "https://www.amazon.com/dp/B00028M47C?tag=19-82341-20",
-      "amount": 3.5,
+      "amount": 4,
       "volume": null,
       "volume_unit": "cup",
       "serving": 16,
@@ -521,11 +421,11 @@
       "panthothenic": 0.5,
       "biotin": 0,
       "choline": 0,
-      "_id": "5579efc6039f44c130eb3a1a",
+      "_id": "5579e396039f44c130eb3929",
       "currency": "$",
       "asin": "B00028M47C",
       "volumeStr": "",
-      "id": "5579efc6039f44c130eb3a1a"
+      "id": "5579e396039f44c130eb3929"
     },
     {
       "persistedAsin": "",
@@ -536,7 +436,7 @@
       "item_cost": 37.3,
       "source": "Bob's Red Mill (4x 22oz)",
       "url": "http://www.bobsredmill.com/whole-grain-oat-flour.html",
-      "amount": 155,
+      "amount": 63,
       "volume": null,
       "volume_unit": "cup",
       "serving": 100,
@@ -582,11 +482,11 @@
       "panthothenic": 0.2,
       "biotin": 0,
       "choline": 29.9,
-      "_id": "5579efc6039f44c130eb3a19",
+      "_id": "5579e396039f44c130eb3928",
       "currency": "$",
       "asin": "",
       "volumeStr": "",
-      "id": "5579efc6039f44c130eb3a19"
+      "id": "5579e396039f44c130eb3928"
     },
     {
       "persistedAsin": "B004VLVD50",
@@ -597,7 +497,7 @@
       "item_cost": 26.34,
       "source": "Amazon",
       "url": "https://www.amazon.com/dp/B004VLVD50?tag=19-82341-20",
-      "amount": 161,
+      "amount": 80,
       "volume": null,
       "volume_unit": "cup",
       "serving": 40,
@@ -643,11 +543,11 @@
       "panthothenic": 0,
       "biotin": 0,
       "choline": 0,
-      "_id": "5579efc6039f44c130eb3a18",
+      "_id": "5579e396039f44c130eb3927",
       "currency": "$",
       "asin": "B004VLVD50",
       "volumeStr": "",
-      "id": "5579efc6039f44c130eb3a18"
+      "id": "5579e396039f44c130eb3927"
     },
     {
       "persistedAsin": "B00JYF1J2U",
@@ -704,11 +604,11 @@
       "panthothenic": 0,
       "biotin": 0,
       "choline": 0,
-      "_id": "5579efc6039f44c130eb3a17",
+      "_id": "5579e396039f44c130eb3926",
       "currency": "$",
       "asin": "B00JYF1J2U",
       "volumeStr": "",
-      "id": "5579efc6039f44c130eb3a17"
+      "id": "5579e396039f44c130eb3926"
     },
     {
       "persistedAsin": "",
@@ -765,11 +665,11 @@
       "panthothenic": 0,
       "biotin": 0,
       "choline": 0,
-      "_id": "5579efc6039f44c130eb3a16",
+      "_id": "5579e396039f44c130eb3925",
       "currency": "$",
       "asin": "",
       "volumeStr": "",
-      "id": "5579efc6039f44c130eb3a16"
+      "id": "5579e396039f44c130eb3925"
     },
     {
       "persistedAsin": "",
@@ -780,7 +680,7 @@
       "item_cost": 825,
       "source": "",
       "url": "",
-      "amount": 5,
+      "amount": 9,
       "volume": null,
       "volume_unit": "cup",
       "serving": 8,
@@ -826,11 +726,11 @@
       "panthothenic": 0,
       "biotin": 0,
       "choline": 0,
-      "_id": "5579efc6039f44c130eb3a15",
+      "_id": "5579e396039f44c130eb3924",
       "currency": "$",
       "asin": "",
       "volumeStr": "",
-      "id": "5579efc6039f44c130eb3a15"
+      "id": "5579e396039f44c130eb3924"
     },
     {
       "persistedAsin": "",
@@ -887,11 +787,11 @@
       "panthothenic": 0,
       "biotin": 0,
       "choline": 0,
-      "_id": "5579efc6039f44c130eb3a14",
+      "_id": "5579e396039f44c130eb3923",
       "currency": "$",
       "asin": "",
       "volumeStr": "",
-      "id": "5579efc6039f44c130eb3a14"
+      "id": "5579e396039f44c130eb3923"
     },
     {
       "persistedAsin": "B000EDDSE8",
@@ -902,7 +802,7 @@
       "item_cost": 42.8,
       "source": "Amazon",
       "url": "https://www.amazon.com/dp/B000EDDSE8?tag=19-82341-20",
-      "amount": 5,
+      "amount": 3,
       "volume": null,
       "volume_unit": "cup",
       "serving": 100,
@@ -948,11 +848,11 @@
       "panthothenic": 0.985,
       "biotin": 0,
       "choline": 78.7,
-      "_id": "5579efc6039f44c130eb3a13",
+      "_id": "5579e396039f44c130eb3922",
       "currency": "$",
       "asin": "B000EDDSE8",
       "volumeStr": "",
-      "id": "5579efc6039f44c130eb3a13"
+      "id": "5579e396039f44c130eb3922"
     },
     {
       "persistedAsin": "",
@@ -1009,58 +909,98 @@
       "panthothenic": 0.091,
       "biotin": 0,
       "choline": 0.8,
-      "_id": "5579efc6039f44c130eb3a12",
+      "_id": "5579e396039f44c130eb3921",
       "currency": "$",
       "asin": "",
       "volumeStr": "",
-      "id": "5579efc6039f44c130eb3a12"
-    },
-        ];
-
-        var testGeneticSoylent = new GeneticSoylent({
-            ingredients: ingredients,
-            targetNutrients: {
-                'Calories (kcal)': {min: 1800, max: 2200, importanceFactor: 3},
-                'Carbohydrates (g)': {min: 250, max: 2500, importanceFactor: 1},
-                'Protein (g)': {min: 85, max: 850, importanceFactor: 1},
-                'Total Fat (g)': {min: 65, max: 650, importanceFactor: 1},
-                'Omega-3 Fatty Acids (g)': {min: 1.6, max: 16, importanceFactor: 1},
-                'Omega-6 Fatty Acids (g)': {min: 17, max: 170, importanceFactor: 1},
-                'Total Fiber (g)': {min: 28, max: 280, importanceFactor: 3},
-                'Vitamin A (IU)': {min: 3000, max: 6500, importanceFactor: 1},
-                'Vitamin B6 (mg)': {min: 1.3, max: 50.65, importanceFactor: 1},
-                'Vitamin B12 (ug)': {min: 2.4, max: 24, importanceFactor: 1},
-                'Vitamin C (mg)': {min: 90, max: 1045, importanceFactor: 1},
-                'Vitamin D (IU)': {min: 600, max: 2300, importanceFactor: 1},
-                'Vitamin E (IU)': {min: 20, max: 510, importanceFactor: 1},
-                'Vitamin K (ug)': {min: 120, max: 1200, importanceFactor: 1},
-                'Thiamin (mg)': {min: 1.2, max: 12, importanceFactor: 1},
-                'Riboflavin (mg)': {min: 1.3, max: 13, importanceFactor: 1},
-                'Niacin (mg)': {min: 16, max: 25.5, importanceFactor: 1},
-                'Folate (ug)': {min: 400, max: 700, importanceFactor: 1},
-                'Panthotenic Acid (mg)': {min: 5, max: 50, importanceFactor: 1},
-                'Biotin (ug)': {min: 30, max: 300, importanceFactor: 1},
-                'Choline (mg)': {min: 550, max: 2025, importanceFactor: 1},
-                'Calcium (g)': {min: 1, max: 1.75, importanceFactor: 1},
-                'Chloride (g)': {min: 2.3, max: 2.95, importanceFactor: 1},
-                'Chromium (ug)': {min: 35, max: 350, importanceFactor: 1},
-                'Copper (mg)': {min: 0.9, max: 5.45, importanceFactor: 1},
-                'Iodine (ug)': {min: 150, max: 625, importanceFactor: 1},
-                'Iron (mg)': {min: 8, max: 26.5, importanceFactor: 10},
-                'Magnesium (mg)': {min: 420, max: 4200, importanceFactor: 1},
-                'Manganese (mg)': {min: 2.3, max: 6.65, importanceFactor: 1},
-                'Molybdenum (ug)': {min: 45, max: 1022.5, importanceFactor: 1},
-                'Phosphorus (g)': {min: 0.7, max: 2.35, importanceFactor: 1},
-                'Potassium (g)': {min: 3.5, max: 5, importanceFactor: 1},
-                'Selenium (ug)': {min: 55, max: 227.5, importanceFactor: 1},
-                'Sodium (g)': {min: 1.5, max: 1.9, importanceFactor: 1},
-                'Sulfur (g)': {min: 2, max: 20, importanceFactor: 1},
-                'Zinc (mg)': {min: 11, max: 25.5, importanceFactor: 1},
-            }
-        });
-
-
-    </script>
-
-</body>
-</html>
+      "id": "5579e396039f44c130eb3921"
+    }
+  ],
+  "nutrientTargets": {
+    "soluble-fiber_max": 0,
+    "soluble-fiber": 0,
+    "saturated-fat_max": 0,
+    "saturated-fat": 0,
+    "polyunsaturated-fat_max": 0,
+    "polyunsaturated-fat": 0,
+    "monounsaturated-fat_max": 0,
+    "monounsaturated-fat": 0,
+    "insoluble-fiber_max": 0,
+    "insoluble-fiber": 0,
+    "name": "Chris",
+    "calories": 2089,
+    "calories_max": 0,
+    "carbs": 225,
+    "carbs_max": 0,
+    "protein": 178,
+    "protein_max": 0,
+    "fat": 53,
+    "fat_max": 0,
+    "omega_3": 1.6,
+    "omega_3_max": 0,
+    "omega_6": 17,
+    "omega_6_max": 0,
+    "fiber": 28,
+    "fiber_max": 0,
+    "cholesterol": 0,
+    "cholesterol_max": 0,
+    "calcium": 1,
+    "calcium_max": 2.5,
+    "chloride": 2.3,
+    "chloride_max": 3.6,
+    "chromium": 35,
+    "chromium_max": 0,
+    "copper": 0.9,
+    "copper_max": 10,
+    "iodine": 150,
+    "iodine_max": 1100,
+    "iron": 8,
+    "iron_max": 45,
+    "magnesium": 420,
+    "magnesium_max": 0,
+    "maganese": 2.3,
+    "maganese_max": 11,
+    "molybdenum": 45,
+    "molybdenum_max": 2000,
+    "phosphorus": 0.7,
+    "phosphorus_max": 4,
+    "potassium": 3.5,
+    "potassium_max": 0,
+    "selinium": 55,
+    "selinium_max": 400,
+    "sodium": 1.5,
+    "sodium_max": 2.3,
+    "sulfur": 2,
+    "sulfur_max": 0,
+    "zinc": 11,
+    "zinc_max": 40,
+    "vitamin_a": 3000,
+    "vitamin_a_max": 10000,
+    "vitamin_b6": 1.3,
+    "vitamin_b6_max": 100,
+    "vitamin_b12": 2.4,
+    "vitamin_b12_max": 0,
+    "vitamin_c": 90,
+    "vitamin_c_max": 2000,
+    "vitamin_d": 600,
+    "vitamin_d_max": 4000,
+    "vitamin_e": 20,
+    "vitamin_e_max": 1000,
+    "vitamin_k": 120,
+    "vitamin_k_max": 0,
+    "thiamin": 1.2,
+    "thiamin_max": 0,
+    "riboflavin": 1.3,
+    "riboflavin_max": 0,
+    "niacin": 16,
+    "niacin_max": 35,
+    "folate": 400,
+    "folate_max": 1000,
+    "panthothenic": 5,
+    "panthothenic_max": 0,
+    "biotin": 30,
+    "biotin_max": 0,
+    "choline": 550,
+    "choline_max": 3500
+  }
+}
