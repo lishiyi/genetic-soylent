@@ -217,7 +217,6 @@ GeneticSoylent.prototype.render = function() {
         ratioAmounts: this.recipes[0].ratioAmounts,
         targetRatios: this.ratios,
     }));
-
     $('#nutrientTableRemainder').html(nutrientHtml({
         total: this.recipes[0].nutrientTotals,
         amounts: this.recipes[0].ingredientAmounts,
@@ -226,6 +225,7 @@ GeneticSoylent.prototype.render = function() {
         nutrientCompleteness: this.recipes[0].nutrientCompleteness,
         nutrientKeys: nutrientTableKeysForSecondColumn.sort()
     }));
+
 
 
     $('.nutrientInput').change(function(){
@@ -243,12 +243,12 @@ GeneticSoylent.prototype.render = function() {
         var keyInfo = this.name.split("_._");
         testGeneticSoylent.ratios[keyInfo[0]][keyInfo[1]] = this.value;
     });
-
+/**
     $('.ingredientInput').change(function(){
         var keyInfo = this.name.split("_._");
         testGeneticSoylent.ingredients[keyInfo[0]][keyInfo[1]] = +this.value;
     });
-
+*/
     $('.generation').val(this.currentGeneration);
 
 };
