@@ -1009,8 +1009,105 @@ $(function(){
     }
 
     function convertJSONNutritionToGeneticNutrition(nutrition){
-        var newNutrition = [];
+        //var newNutrition = [];
+
+
+        var tempNutrition = {
+            "soluble-fiber_max": 0,
+            "soluble-fiber": 0,
+            "saturated-fat_max": 0,
+            "saturated-fat": 0,
+            "polyunsaturated-fat_max": 0,
+            "polyunsaturated-fat": 0,
+            "monounsaturated-fat_max": 0,
+            "monounsaturated-fat": 0,
+            "insoluble-fiber_max": 0,
+            "insoluble-fiber": 0,
+            "name": "Sebastian",
+            "calories": 2833,
+            "calories_max": 0,
+            "carbs": 404,
+            "carbs_max": 0,
+            "protein": 142,
+            "protein_max": 0,
+            "fat": 63,
+            "fat_max": 0,
+            "omega_3": 1.6,
+            "omega_3_max": 0,
+            "omega_6": 17,
+            "omega_6_max": 0,
+            "fiber": 28,
+            "fiber_max": 0,
+            "cholesterol": 0,
+            "cholesterol_max": 0,
+            "calcium": 1,
+            "calcium_max": 2.5,
+            "chloride": 2.3,
+            "chloride_max": 3.6,
+            "chromium": 35,
+            "chromium_max": 0,
+            "copper": 0.9,
+            "copper_max": 10,
+            "iodine": 150,
+            "iodine_max": 1100,
+            "iron": 8,
+            "iron_max": 45,
+            "magnesium": 420,
+            "magnesium_max": 0,
+            "maganese": 2.3,
+            "maganese_max": 11,
+            "molybdenum": 45,
+            "molybdenum_max": 2000,
+            "phosphorus": 0.7,
+            "phosphorus_max": 4,
+            "potassium": 3.5,
+            "potassium_max": 0,
+            "selinium": 55,
+            "selinium_max": 400,
+            "sodium": 1.5,
+            "sodium_max": 2.3,
+            "sulfur": 2,
+            "sulfur_max": 0,
+            "zinc": 11,
+            "zinc_max": 40,
+            "vitamin_a": 3000,
+            "vitamin_a_max": 10000,
+            "vitamin_b6": 1.3,
+            "vitamin_b6_max": 100,
+            "vitamin_b12": 2.4,
+            "vitamin_b12_max": 0,
+            "vitamin_c": 90,
+            "vitamin_c_max": 2000,
+            "vitamin_d": 600,
+            "vitamin_d_max": 4000,
+            "vitamin_e": 20,
+            "vitamin_e_max": 1000,
+            "vitamin_k": 120,
+            "vitamin_k_max": 0,
+            "thiamin": 1.2,
+            "thiamin_max": 0,
+            "riboflavin": 1.3,
+            "riboflavin_max": 0,
+            "niacin": 16,
+            "niacin_max": 35,
+            "folate": 400,
+            "folate_max": 1000,
+            "panthothenic": 5,
+            "panthothenic_max": 0,
+            "biotin": 30,
+            "biotin_max": 0,
+            "choline": 550,
+            "choline_max": 3500
+          };
+
+
         $.each(nutrition, function(key, value){
+            tempNutrition.key = value;
+        });
+        
+        var newNutrition = [];
+
+        $.each(tempNutrition, function(key, value){
             // get the name of the trueKey, which doesn't include _max
             // later, we will put the value of _max into the key max of the nutrient trueKey
             var trueKey = key.replace("_max","");
