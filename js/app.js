@@ -1104,7 +1104,15 @@ $(function(){
         $.each(nutrition, function(key, value){
             tempNutrition.key = value;
         });
-        
+
+        /*
+        if(nutrition.gender == "male"){
+            if(nutrition.gender.age >= 9 && nutrition.gender.age <= 13){
+                
+            }
+        }
+        */
+
         var newNutrition = [];
 
         $.each(tempNutrition, function(key, value){
